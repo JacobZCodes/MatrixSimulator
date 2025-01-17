@@ -1,0 +1,15 @@
+#ifndef MATRIX
+#define MATRIX
+#include "Entry.h"
+class Matrix {
+    public:
+        Matrix();
+        Matrix(int N);
+        void Randomize(); // change all existing values to random nums 0-9
+        void PrintMatrix();
+        Entry** grid;
+        int numRows;
+        int numCols;
+        float* GenerateNaturalNumbersSet(int size);
+};
+#endif
