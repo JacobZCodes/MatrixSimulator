@@ -6,6 +6,7 @@ class Entry {
     public:
         Entry();
         Entry(float value, tuple<int,int> position);
+        ~Entry();
         float value;
         tuple<int,int> position;
 

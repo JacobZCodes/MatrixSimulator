@@ -8,3 +8,7 @@ Entry::Entry() {
     value = 0;
     position = make_tuple(0,0); 
 }
+
+Entry::~Entry() {
+    
+}

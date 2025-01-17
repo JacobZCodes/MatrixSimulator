@@ -7,6 +7,7 @@ class Matrix {
         Matrix(int N);
         void Randomize(); // change all existing values to random nums 0-9
         void PrintMatrix();
+        void Augment();
         Entry** grid;
         int numRows;
         int numCols;
