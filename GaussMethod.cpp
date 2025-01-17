@@ -45,3 +45,50 @@ float GaussMethod::FindCombinationScalar(float numToScale, float numToBeMadeZero
     cout << "combo scalar is " << (numToMakeZero/numToAddToNumToMakeZero) * -1 << endl;
     return (numToMakeZero/numToAddToNumToMakeZero) * -1;
 }
+
+void GaussMethod::BackSub(Matrix mat) {
+    float* unknowns = new float[mat.numRows];
+    for (int i=mat.numRows; i>0; --i) {
+        if (i == mat.numRows) {
+            // base case
+            float constant = mat.grid[mat.numRows-1][mat.numCols-1].value;
+            float unknown = mat.grid[mat.numRows-1][mat.numRows-1].value;
+            float solvedUnkown = constant / unknown;
+            cout << "SU " << solvedUnkown << endl;
+            unknowns[0] = solvedUnkown;
+        }
+
+        else {
+            // recursion
+            if (i == 3) {
+            cout << "i is " << i << endl;
+            }
+            float reciprocal = 1/mat.grid[i-1][i-1].value;
+            float constant = mat.grid[i-1][mat.numCols-1].value;
+            if (i == 3) {
+            cout << "reciprocal: " << reciprocal << "constant " << constant << endl;
+            }
+            
+            int numTermsToSubtract = mat.numRows - i;
+            float termSum = 0;
+            for (int j=0; j<numTermsToSubtract; j++) {
+                if (i == 3) {
+                    cout << "term: " << mat.grid[i-1][mat.numRows-(j+1)].value << " * " << unknowns[j] << endl;
+                }
+                float term = mat.grid[i-1][mat.numRows-(j+1)].value * unknowns[j];
+                termSum += term;
+            }
+            // subtract termSum from constant then multiply by reciprocal
+            float unknown = reciprocal * (constant - termSum);
+            cout << "UNK is " << unknown << endl;
+            unknowns[mat.numRows - i] = unknown;
+
+        
+            
+        }
+    }
+    // (T) print out all unknowns
+    for (int i=0; i<mat.numRows; ++i) {
+        cout << "x" << i+1 << "=" << unknowns[i] << endl; 
+    }
+}

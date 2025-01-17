@@ -9,6 +9,5 @@ class Entry {
         ~Entry();
         float value;
         tuple<int,int> position;
-
 };
 #endif

@@ -4,12 +4,9 @@
 #include <iostream>
 using namespace std;
 int main() {
-    Matrix mat = Matrix(3); 
+    Matrix mat = Matrix(5); 
     mat.PrintMatrix();
     GaussMethod::ReduceToREF(mat);
-    mat.PrintMatrix();
-    // double result = pow(100,100);
-    // cout << result << endl;
     mat.Augment();
-
+    GaussMethod::BackSub(mat);
 }
