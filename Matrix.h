@@ -11,6 +11,6 @@ class Matrix {
         Entry** grid;
         int numRows;
         int numCols;
-        float* GenerateNaturalNumbersSet(int size);
+        float* GenerateNaturalNumbersSet(int size); // vondemonde matrix
 };
 #endif

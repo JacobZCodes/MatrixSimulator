@@ -1,4 +1,6 @@
+#include "Counter.h"
 #include "MatrixOperations.h"
+#include "GaussMethod.h"
 #include <iostream>
 using namespace std;
 void MatrixOperations::ScaleRow(Matrix mat, int rowIndex, float scalar) {
@@ -19,6 +21,10 @@ void MatrixOperations::CombineRowsWithScalar(Matrix mat, Entry* rowToBeAddedTo, 
         float scaledNum = rowToBeScaled[i].value * scalar;
         tempScaledValues[i] = scaledNum;
     }
+    // update multiply/divide counter
+    cout << "mult updated" << endl;
+    Counter::multDivCounter += 3;
+    cout << Counter::multDivCounter << endl;
     MatrixOperations::AddRows(mat, rowToBeAddedTo, tempScaledValues);
     delete[] tempScaledValues;
     
@@ -28,6 +34,10 @@ void MatrixOperations::AddRows(Matrix mat, Entry* rowToBeAddedTo, float* rowToAd
     for (int i=0; i<mat.numCols; ++i) {
         rowToBeAddedTo[i].value += rowToAdd[i];
     }
+    cout << "add updated" << endl;
+    cout << "num cols is " << mat.numCols << endl;
+    Counter::addSubCounter += 3;
+    cout << Counter::addSubCounter << endl;
 }
 
 bool MatrixOperations::HasFullRank(Matrix mat) {

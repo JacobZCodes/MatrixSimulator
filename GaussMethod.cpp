@@ -1,5 +1,6 @@
 #include "GaussMethod.h"
 #include "MatrixOperations.h"
+#include "Counter.h"
 #include <iostream>
 using namespace std;
 void GaussMethod::ReduceToREF(Matrix mat) { 
@@ -26,7 +27,6 @@ void GaussMethod::MakeAllEntriesBeneathThisPivotZero(Matrix mat, tuple<int,int> 
         Entry* rowWithNumToMakeZero = mat.grid[pivotRowIndex+i];
         float scalar = FindCombinationScalar(pivot, numToMakeZero);
         MatrixOperations::CombineRowsWithScalar(mat, rowWithNumToMakeZero, pivotRow, scalar);
-        mat.PrintMatrix();
     }
 }
 
@@ -39,10 +39,8 @@ void GaussMethod::MakeAllEntriesBeneathThisPivotZero(Matrix mat, tuple<int,int> 
 // }
 
 float GaussMethod::FindCombinationScalar(float numToScale, float numToBeMadeZero) {
-    cout << "finding scalar between " << numToScale << " and " << numToBeMadeZero << endl;
     float numToMakeZero = numToBeMadeZero;
     float numToAddToNumToMakeZero = numToScale;
-    cout << "combo scalar is " << (numToMakeZero/numToAddToNumToMakeZero) * -1 << endl;
     return (numToMakeZero/numToAddToNumToMakeZero) * -1;
 }
 
@@ -54,33 +52,27 @@ void GaussMethod::BackSub(Matrix mat) {
             float constant = mat.grid[mat.numRows-1][mat.numCols-1].value;
             float unknown = mat.grid[mat.numRows-1][mat.numRows-1].value;
             float solvedUnkown = constant / unknown;
-            cout << "SU " << solvedUnkown << endl;
+            Counter::multDivCounter += 1;
             unknowns[0] = solvedUnkown;
         }
 
         else {
             // recursion
-            if (i == 3) {
-            cout << "i is " << i << endl;
-            }
             float reciprocal = 1/mat.grid[i-1][i-1].value;
+            Counter::multDivCounter += 1;
             float constant = mat.grid[i-1][mat.numCols-1].value;
-            if (i == 3) {
-            cout << "reciprocal: " << reciprocal << "constant " << constant << endl;
-            }
-            
             int numTermsToSubtract = mat.numRows - i;
             float termSum = 0;
             for (int j=0; j<numTermsToSubtract; j++) {
-                if (i == 3) {
-                    cout << "term: " << mat.grid[i-1][mat.numRows-(j+1)].value << " * " << unknowns[j] << endl;
-                }
                 float term = mat.grid[i-1][mat.numRows-(j+1)].value * unknowns[j];
+                Counter::multDivCounter += 1;
                 termSum += term;
+                Counter::addSubCounter +=1;
             }
             // subtract termSum from constant then multiply by reciprocal
             float unknown = reciprocal * (constant - termSum);
-            cout << "UNK is " << unknown << endl;
+            Counter::addSubCounter += 1;
+            Counter::multDivCounter += 1;
             unknowns[mat.numRows - i] = unknown;
 
         

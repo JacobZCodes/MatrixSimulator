@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include "Entry.h"
+#include "Counter.h"
 #include <math.h>
 #include <iostream>
 #include <string>
