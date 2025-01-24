@@ -5,6 +5,7 @@ class Counter {
         static int addSubCounter;
         static int multDivCounter;
         static void DisplayCounters();
+        static void ResetCounters();
 };
 #endif
 

@@ -9,3 +9,10 @@ void Counter::DisplayCounters() {
     cout << "add/sub " << Counter::addSubCounter << endl;
     cout << "mult/div " << Counter::multDivCounter << endl;
 }
+
+void Counter::ResetCounters() {
+
+    addSubCounter = 0;
+    multDivCounter = 0;
+
+}

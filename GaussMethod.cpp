@@ -50,44 +50,62 @@ float GaussMethod::FindCombinationScalar(float numToScale, float numToBeMadeZero
 }
 
 void GaussMethod::BackSub(Matrix mat) {
-    cout << "BACK SUB" << endl;
+    // cout << "BACK SUB" << endl;
     float* unknowns = new float[mat.numRows];
     for (int i=mat.numRows; i>0; --i) {
         if (i == mat.numRows) {
+            cout << "X" << i << endl; 
             // base case
             float constant = mat.grid[mat.numRows-1][mat.numCols-1].value;
             float unknown = mat.grid[mat.numRows-1][mat.numRows-1].value;
+            // cout << "Const: " << constant << endl;
+            // cout << "Unk: " << unknown << endl; 
             float solvedUnkown = constant / unknown;
+            // cout << "Solved: " << solvedUnkown << endl;
             Counter::multDivCounter += 1;
-            unknowns[0] = solvedUnkown;
+            unknowns[i-1] = solvedUnkown;
+            Counter::DisplayCounters();
+            Counter::ResetCounters();
 
         }
 
         else {
+            cout << "X" << i << endl;
+            // cout << "NEW UNKNOWN DISCOVERY" << endl;
             // recursion
-            float reciprocal = 1/mat.grid[i-1][i-1].value;
-            Counter::multDivCounter += 1;
+            float divisor = mat.grid[i-1][i-1].value;
             float constant = mat.grid[i-1][mat.numCols-1].value;
             int numTermsToSubtract = mat.numRows - i;
+            // cout << "Divisor " << divisor << endl;
+            // cout << "Constant " << constant << endl;
+            // cout << "Terms to add: " << numTermsToSubtract << endl;
             float termSum = 0;
             for (int j=0; j<numTermsToSubtract; j++) {
-                float term = mat.grid[i-1][mat.numRows-(j+1)].value * unknowns[j];
+                float term = mat.grid[i-1][mat.numRows-(j+1)].value * unknowns[mat.numRows - (1+j)];
                 Counter::multDivCounter += 1;
+                // cout << "Coefficient is " << mat.grid[i-1][mat.numRows-(j+1)].value << " with solved unk " << unknowns[mat.numRows - (1+j)] << endl;
+                // cout << "Term is " << term << endl;
+                if (termSum == 0) {
+                    termSum += term;
+                    continue; // We don't count adding a number to zero as an addSub operation
+                }
                 termSum += term;
                 Counter::addSubCounter +=1;
             }
-            // subtract termSum from constant then multiply by reciprocal
-            float unknown = reciprocal * (constant - termSum);
+            // cout << "Term sum: " << termSum << endl;
+            // subtract termSum from constant then divide with divisor
+            float unknown = (constant - termSum) / divisor;
+            // cout << "Unk: " << unknown << endl;
             Counter::addSubCounter += 1;
             Counter::multDivCounter += 1;
-            unknowns[mat.numRows - i] = unknown;
-
-        
+            unknowns[i-1] = unknown;
+            Counter::DisplayCounters();
+            Counter::ResetCounters();
             
         }
     }
     // (T) print out all unknowns
-    for (int i=0; i<mat.numRows; ++i) {
-        cout << "x" << i+1 << "=" << unknowns[i] << endl; 
+    for (int i=mat.numRows; i>0; i--) {
+        cout << "x" << i << "=" << unknowns[i-1] << endl; 
     }
 }
