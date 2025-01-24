@@ -12,5 +12,8 @@ class Matrix {
         int numRows;
         int numCols;
         float* GenerateNaturalNumbersSet(int size); // vondemonde matrix
+        bool hasNum(float num, float* arr, int spacesToCheck);
+        float* generateBVector();
+        
 };
 #endif

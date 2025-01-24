@@ -19,12 +19,11 @@ void MatrixOperations::CombineRowsWithScalar(Matrix mat, Entry* rowToBeAddedTo, 
     float* tempScaledValues = new float[mat.numCols];
     for (int i=0; i<mat.numCols; ++i) {
         float scaledNum = rowToBeScaled[i].value * scalar;
+        Counter::multDivCounter++;
+        // cout << "Scaled element, mult/div is: " << Counter::multDivCounter << endl;
         tempScaledValues[i] = scaledNum;
     }
-    // update multiply/divide counter
-    cout << "mult updated" << endl;
-    Counter::multDivCounter += 3;
-    cout << Counter::multDivCounter << endl;
+    
     MatrixOperations::AddRows(mat, rowToBeAddedTo, tempScaledValues);
     delete[] tempScaledValues;
     
@@ -33,11 +32,17 @@ void MatrixOperations::CombineRowsWithScalar(Matrix mat, Entry* rowToBeAddedTo, 
 void MatrixOperations::AddRows(Matrix mat, Entry* rowToBeAddedTo, float* rowToAdd) {
     for (int i=0; i<mat.numCols; ++i) {
         rowToBeAddedTo[i].value += rowToAdd[i];
+        Counter::addSubCounter++;
+        // cout << "Added elements, add/sub is: " << Counter::addSubCounter << endl;
+        // We don't count the mult/add step if the computation leads to a 0
+        if (rowToBeAddedTo[i].value == 0) {
+            // cout << "Decrementing counters for 0 computation..." << endl;
+            Counter::addSubCounter--;
+            Counter::multDivCounter--;
+            // cout << "add/sub is" << Counter::addSubCounter << endl;
+            // cout << "mult/div is " << Counter::multDivCounter << endl;
+        }
     }
-    cout << "add updated" << endl;
-    cout << "num cols is " << mat.numCols << endl;
-    Counter::addSubCounter += 3;
-    cout << Counter::addSubCounter << endl;
 }
 
 bool MatrixOperations::HasFullRank(Matrix mat) {

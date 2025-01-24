@@ -5,10 +5,13 @@
 using namespace std;
 void GaussMethod::ReduceToREF(Matrix mat) { 
     for (int i=0;i<mat.numRows; ++i) {
+        // cout << "BEGIN STEP " << i+1 << endl;
         // find pivot
         float currentPivot = mat.grid[i][i].value;
         // make zeroes beneath pivot
         MakeAllEntriesBeneathThisPivotZero(mat, mat.grid[i][i].position);
+        // cout << "STEP " << i+1 << " M/D is " << Counter::multDivCounter << endl;
+        // cout << "STEP " << i+1 << " A/S is " << Counter::addSubCounter << endl;
     }
         
 }
@@ -41,10 +44,13 @@ void GaussMethod::MakeAllEntriesBeneathThisPivotZero(Matrix mat, tuple<int,int> 
 float GaussMethod::FindCombinationScalar(float numToScale, float numToBeMadeZero) {
     float numToMakeZero = numToBeMadeZero;
     float numToAddToNumToMakeZero = numToScale;
+    Counter::multDivCounter++;
+    // cout << "Scalar computed, mult/div is: " << Counter::multDivCounter << endl;
     return (numToMakeZero/numToAddToNumToMakeZero) * -1;
 }
 
 void GaussMethod::BackSub(Matrix mat) {
+    cout << "BACK SUB" << endl;
     float* unknowns = new float[mat.numRows];
     for (int i=mat.numRows; i>0; --i) {
         if (i == mat.numRows) {
@@ -54,6 +60,7 @@ void GaussMethod::BackSub(Matrix mat) {
             float solvedUnkown = constant / unknown;
             Counter::multDivCounter += 1;
             unknowns[0] = solvedUnkown;
+
         }
 
         else {
