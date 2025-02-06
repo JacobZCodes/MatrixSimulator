@@ -12,10 +12,13 @@ int main() {
     // GaussMethod::ReduceToREF(mat);
     // cout << "add/sub is " << Counter::addSubCounter << endl;
     // cout << "mult/div is " << Counter::multDivCounter << endl;
-    Matrix mat = Matrix(4);
+    Matrix mat = Matrix(3);
+    mat.PrintMatrix();
     mat.Augment();
+    mat.PrintMatrix();
     // mat.PrintMatrix();
     GaussMethod::ReduceToREF(mat);
+    mat.PrintMatrix();
     Counter::ResetCounters();
 
     // (T) default grid for debugging

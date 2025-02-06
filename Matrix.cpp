@@ -8,6 +8,8 @@
 #include <ctime>
 #include <iomanip>
 #include <tuple>
+#include <iostream>
+#include <fstream> // Include for file I/O
 using namespace std;
 
 Matrix::Matrix(int N) {
@@ -52,13 +54,14 @@ float* Matrix::GenerateNaturalNumbersSet(int size) {
 
 }
 void Matrix::PrintMatrix() {
+    ofstream outputFile("output.txt", ios::app);
     for (int i=0; i<numRows; ++i) {
         for (int j=0; j<numCols; j++) {
-            cout << fixed << setprecision(1) << grid[i][j].value << " ";
+            outputFile << fixed << setprecision(1) << grid[i][j].value << " ";
         }
-        cout << endl;
+        outputFile << endl;
     }
-    cout << endl;
+    outputFile << endl;
 }
 
 void Matrix::Randomize() {

@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Jacob/Desktop/MathCodeyStuffUwU/Animations/media/videos/main/1080p15/partial_movie_files/Eq/1264212857_522778589_223132457.mp4'
+file 'file:C:/Users/Jacob/Desktop/MathCodeyStuffUwU/Animations/media/videos/main/1080p15/partial_movie_files/Eq/2725161996_4217992463_1553031411.mp4'
+file 'file:C:/Users/Jacob/Desktop/MathCodeyStuffUwU/Animations/media/videos/main/1080p15/partial_movie_files/Eq/2725161996_307495305_3920882880.mp4'
+file 'file:C:/Users/Jacob/Desktop/MathCodeyStuffUwU/Animations/media/videos/main/1080p15/partial_movie_files/Eq/2725161996_4217992463_1736033633.mp4'
+file 'file:C:/Users/Jacob/Desktop/MathCodeyStuffUwU/Animations/media/videos/main/1080p15/partial_movie_files/Eq/2725161996_1620742665_3442588393.mp4'
+file 'file:C:/Users/Jacob/Desktop/MathCodeyStuffUwU/Animations/media/videos/main/1080p15/partial_movie_files/Eq/2725161996_4217992463_1073485119.mp4'
